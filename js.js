@@ -1,10 +1,23 @@
 function buildBoard() {
     let boardContainer = document.querySelector('.boardContainer');
-    for (let i = 0; i < 64; i++){
-        let boardSquare = document.createElement('div');
-        boardSquare.classList.add('boardSquare');
-        boardContainer.appendChild(boardSquare);
+    for (let i = 0; i < 8; i++){
+        for (let j = 0; j < 8; j++) {
+            let boardSquare = document.createElement('div');
+            let id = j + ',' + i;
+            boardSquare.classList.add('boardSquare');
+            boardSquare.setAttribute('id', id);
+            if (i % 2 === 0) {
+                j%2===0 ? boardSquare.classList.add('green') : boardSquare.classList.add('tan')
+            } else {
+                j%2===0 ? boardSquare.classList.add('tan') : boardSquare.classList.add('green')
+            }
+            boardContainer.appendChild(boardSquare);
+            
+
+        }
     }
+    //Section for non-console path details
+    document.body.appendChild(document.createElement('h1'))
 }
 
 class Node {
@@ -53,7 +66,6 @@ class Graph {
             //Push first child onto queue and update visited
             queue.push(node.right1Up2);
             this.visited.push(node.right1Up2.pos.toString());
-            //console.log("Added " + node.right1Up2.pos + " to Q");
         }
         //And repeat for all potential children
         const r2u1 = [start[0] + 2, start[1] + 1];
@@ -63,7 +75,6 @@ class Graph {
             node.right2Up1 = new Node(r2u1);
             queue.push(node.right2Up1);
             this.visited.push(node.right2Up1.pos.toString());
-           // console.log("Added " + node.right2Up1.pos + " to Q");
         }
         const r2d1 = [start[0] + 2, start[1] - 1];
         if (!this.isValid(r2d1, end)|| (this.visited.indexOf(r2d1.toString()) !== -1)) {
@@ -72,7 +83,6 @@ class Graph {
             node.right2Down1 = new Node(r2d1);
             queue.push(node.right2Down1);
             this.visited.push(node.right2Down1.pos.toString());
-           // console.log("Added " + node.right2Down1.pos + " to Q");
         }
         const r1d2 = [start[0] + 1, start[1] - 2];
         if (!this.isValid(r1d2, end)|| (this.visited.indexOf(r1d2.toString()) !== -1)) {
@@ -81,7 +91,6 @@ class Graph {
             node.right1Down2 = new Node(r1d2);
             queue.push(node.right1Down2);
             this.visited.push(node.right1Down2.pos.toString());
-            //console.log("Added " + node.right1Down2.pos + " to Q");
         }
         const l2d1 = [start[0] - 2, start[1] - 1];
         if (!this.isValid(l2d1, end)|| (this.visited.indexOf(l2d1.toString()) !== -1)) {
@@ -90,7 +99,6 @@ class Graph {
             node.left2Down1 = new Node(l2d1);
             queue.push(node.left2Down1);
             this.visited.push(node.left2Down1.pos.toString());
-            //console.log("Added " + node.left2Down1.pos + " to Q");
         }
         const l1d2 = [start[0] - 1, start[1] - 2];
         if (!this.isValid(l1d2, end)|| (this.visited.indexOf(l1d2.toString()) !== -1)) {
@@ -99,7 +107,6 @@ class Graph {
             node.left1Down2 = new Node(l1d2);
             queue.push(node.left1Down2);
             this.visited.push(node.left1Down2.pos.toString());
-            //console.log("Added " + node.left1Down2.pos + " to Q");
         }
         const l2u1 = [start[0] - 2, start[1] + 1];
         if (!this.isValid(l2u1, end) || (this.visited.indexOf(l2u1.toString()) !== -1)) {
@@ -108,7 +115,6 @@ class Graph {
             node.left2Up1 = new Node(l2u1);
             queue.push(node.left2Up1);
             this.visited.push(node.left2Up1.pos.toString());
-            //console.log("Added " + node.left2Up1.pos + " to Q");
         }
         const l1u2 = [start[0] - 1, start[1] + 2];
         if (!this.isValid(l1u2, end) || (this.visited.indexOf(l1u2.toString()) !== -1)) {
@@ -117,7 +123,6 @@ class Graph {
             node.left1Up2 = new Node(l1u2);
             queue.push(node.left1Up2);
             this.visited.push(node.left1Up2.pos.toString());
-            //console.log("Added " + node.left1Up2.pos + " to Q");
         }
         return queue;
     }
@@ -162,12 +167,48 @@ class Graph {
     }
 
     printPath(path) {
+        //For the Console
         let printout = "Path found! ";
         for (let i = 0; i < path.length;i++) {
             printout += '[' + path[i].pos + '] -> ';
         }
         printout += (path.length-1) + ' total moves';
         console.log(printout);
+        //For Non-console reading
+        document.querySelector('h1').textContent = printout;
+        let p = document.createElement('p');
+        p.textContent = "Refresh the page to see a new path";
+        document.querySelector('h1').appendChild(p);
+        
+        //For the visual
+        //Place start and end points
+        let startSquare = document.getElementById(path[0].pos);
+        let endSquare = document.getElementById(path.at(-1).pos);
+        let pic = document.createElement('img');
+        let star = document.createElement('img');
+        pic.setAttribute('src', 'chessKnight.png');
+        star.setAttribute('src', 'star.png');
+        startSquare.appendChild(pic);
+        endSquare.appendChild(star);
+        //Draw Connecting lines
+        let svg = document.querySelector('svg');
+        for (let i = 0; i < path.length - 1; i++){
+            //Find Center of Square Divs
+            let init = document.getElementById(path.at(i).pos);
+            let initCentX = init.offsetLeft + init.offsetWidth / 2;
+            let initCentY = init.offsetTop + init.offsetHeight / 2;
+            let next = document.getElementById(path.at(i+1).pos);
+            let nextCentX = next.offsetLeft + next.offsetWidth / 2;
+            let nextCentY = next.offsetTop + next.offsetHeight / 2;
+            //Draw the line between centers
+            let line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            line.setAttribute('x1', initCentX);
+            line.setAttribute('y1', initCentY);
+            line.setAttribute('x2', nextCentX);
+            line.setAttribute('y2', nextCentY);
+            svg.appendChild(line);
+        }
+        document.querySelector('body').appendChild(svg);
     }
 
 }
@@ -175,8 +216,13 @@ class Graph {
 
 
 buildBoard();
+//Hard-coded coordinates for testing routes
 //const knight = new Graph([0, 0], [3, 3]);
 //const knight2 = new Graph([3, 3], [4, 3]);
-const knight = new Graph([Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)], [Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)]);
-knight.knightMoves(knight.root, knight.end, []);
 //knight2.knightMoves(knight2.root, [4, 3], []);
+
+//Knight is random coordinates on refresh
+const knight = new Graph([Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)], [Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)]);
+
+knight.knightMoves(knight.root, knight.end, []);
+
