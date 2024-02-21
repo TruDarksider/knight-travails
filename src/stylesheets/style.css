@@ -1,0 +1,47 @@
+.boardContainer {
+    height: 800px;
+    width: 800px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    /* border: 1px solid blue; */
+}
+
+.boardSquare {
+    height: 100px;
+    width: 100px;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+}
+
+.green {
+    background-color: rgb(77, 148, 77);
+}
+
+img {
+    margin: 0;
+    padding: 0;
+    height: inherit;
+}
+
+line {
+    transform-origin: 0px 0px;
+    stroke: red;
+    stroke-width: 2;
+}
+
+:not(svg){
+    transform-origin: 0px 0px;
+}
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tan {
+    background-color: tan;
+}
+
