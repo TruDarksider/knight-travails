@@ -1,7 +1,18 @@
 import _ from 'lodash';
+import css from './stylesheets/style.css';
+import KnightFigure from './images/chessKnight.png';
+import Star from './images/star.png';
 
 function buildBoard() {
-    let boardContainer = document.querySelector('.boardContainer');
+    let body = document.querySelector('body');
+    let boardContainer = document.createElement('div');
+    boardContainer.setAttribute('class', 'boardContainer');
+    let svg = document.createElement('svg');
+    /* svg.setAttribute('height', '800px');
+    svg.setAttribute('width', '800px'); */
+    body.appendChild(boardContainer);
+    body.appendChild(svg);
+    //let boardContainer = document.querySelector('.boardContainer');
     for (let i = 0; i < 8; i++){
         for (let j = 0; j < 8; j++) {
             let boardSquare = document.createElement('div');
@@ -188,12 +199,13 @@ class Graph {
         let endSquare = document.getElementById(path.at(-1).pos);
         let pic = document.createElement('img');
         let star = document.createElement('img');
-        pic.setAttribute('src', 'chessKnight.png');
-        star.setAttribute('src', 'star.png');
+        pic.setAttribute('src', KnightFigure);//'./images/chessKnight.png');
+        star.setAttribute('src', Star);//'./images/star.png');
         startSquare.appendChild(pic);
         endSquare.appendChild(star);
         //Draw Connecting lines
         let svg = document.querySelector('svg');
+        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
         for (let i = 0; i < path.length - 1; i++){
             //Find Center of Square Divs
             let init = document.getElementById(path.at(i).pos);

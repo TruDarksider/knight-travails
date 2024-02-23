@@ -39,9 +39,11 @@ svg {
     position: absolute;
     top: 0;
     left: 0;
+    height: 800px;
+    width: 800px;
 }
 
 .tan {
-    background-color: tan;
+    background-color: rgb(174, 204, 150);
 }
 
