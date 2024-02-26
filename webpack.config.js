@@ -22,6 +22,7 @@ module.exports = {
         { test: /\.js$/, loader: "source-map-loader" },
         { test: /\.(png|svg)$/i, type: 'asset/resource' },
         { test: /\.css$/i, use: ["style-loader", "css-loader"], },
+        { test: /\.xml$/, use: [ 'raw-loader' ] },
       ],
     },
     devServer: {

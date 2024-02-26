@@ -215,11 +215,57 @@ class Graph {
             let nextCentX = next.offsetLeft + next.offsetWidth / 2;
             let nextCentY = next.offsetTop + next.offsetHeight / 2;
             //Draw the line between centers
-            let line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            /* let line = document.createElementNS('http://www.w3.org/2000/svg','line');
             line.setAttribute('x1', initCentX);
             line.setAttribute('y1', initCentY);
             line.setAttribute('x2', nextCentX);
-            line.setAttribute('y2', nextCentY);
+            line.setAttribute('y2', nextCentY); */
+            /* let classToAdd = 'line' + i; */
+            let line= document.createElement('div');
+            line.classList.add('line');
+            line.style.transform += 'translateX('+(initCentX)+'px)';
+            line.style.transform += 'translateY('+initCentY+'px)';
+            if(path[i].pos[1]>path[i+1].pos[1]){
+                //Negetaive Degrees
+                switch (path[i].pos[0]-path[i+1].pos[0]){
+                    case -1:
+                        line.style.transform += 'rotate(-63deg)';
+                        break;
+                    case -2:
+                        line.style.transform += 'rotate(-27deg)';
+                        break;
+                    case 1:
+                        line.style.transform += 'rotate(-115deg)';
+                        break;
+                    case 2:
+                        line.style.transform += 'rotate(-155deg)';
+                        break;
+                    default:
+                        console.log("Error in Negetive Degrees");    
+                }
+            } else {
+                //Positve Degrees
+                switch (path[i].pos[0]-path[i+1].pos[0]){
+                    case -1:
+                        line.style.transform += 'rotate(63deg)';
+                        break;
+                    case -2:
+                        line.style.transform += 'rotate(27deg)';
+                        break;
+                    case 1:
+                        line.style.transform += 'rotate(115deg)';
+                        break;
+                    case 2:
+                        line.style.transform += 'rotate(155deg)';
+                        break;
+                    default:
+                        console.log("Error in Positive Degrees");    
+                }
+            }
+            //line.style.transform = 'rotate(30deg)';
+            /* line.setAttribute('left', initCentY+'px');
+            line.setAttribute('bottom', nextCentX+'px');
+            line.setAttribute('right', nextCentY+'px'); */
             svg.appendChild(line);
         }
         document.querySelector('body').appendChild(svg);
