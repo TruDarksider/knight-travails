@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/js.js', //TODO switch to .ts eventually
+  entry: './src/js.ts', //TODO switch to .ts eventually
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),

@@ -229,16 +229,16 @@ class Graph {
                 //Negetaive Degrees
                 switch (path[i].pos[0]-path[i+1].pos[0]){
                     case -1:
-                        line.style.transform += 'rotate(-63deg)';
+                        line.style.transform += 'rotate(-64deg)';
                         break;
                     case -2:
                         line.style.transform += 'rotate(-27deg)';
                         break;
                     case 1:
-                        line.style.transform += 'rotate(-115deg)';
+                        line.style.transform += 'rotate(-117deg)';
                         break;
                     case 2:
-                        line.style.transform += 'rotate(-155deg)';
+                        line.style.transform += 'rotate(-154deg)';
                         break;
                     default:
                         console.log("Error in Negetive Degrees");    
@@ -253,10 +253,10 @@ class Graph {
                         line.style.transform += 'rotate(27deg)';
                         break;
                     case 1:
-                        line.style.transform += 'rotate(115deg)';
+                        line.style.transform += 'rotate(116deg)';
                         break;
                     case 2:
-                        line.style.transform += 'rotate(155deg)';
+                        line.style.transform += 'rotate(153deg)';
                         break;
                     default:
                         console.log("Error in Positive Degrees");    
